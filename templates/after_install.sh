@@ -16,7 +16,8 @@ unzip virtualenv.whl
 python $bootstrap_tmp_dir/virtualenv.py $venvdir
 
 
-# install package using pip install --wheel-dir. All dependencies are fetched automatically.
+# install package using pip install --wheel-dir. Note that with wheels no dependencies are resolved. Thus
+# all transitive dependencies need to be mentioned here. See package_my_pkg.sh for more details
 $pip install --no-index -U --no-cache-dir -f /tmp/wheelio/$reqset/ an-example-pypi-project
 $pip install --no-index -U --no-cache-dir -f /tmp/wheelio/$reqset/ numpy
 
