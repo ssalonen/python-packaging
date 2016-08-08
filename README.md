@@ -18,6 +18,40 @@ Finally, the end point application (`an_example_pypi_project`) depends on the du
 
 ## Usage
 
-1. ./scripts/build_wheels.sh : builds wheels for _requirement sets_ in `reqsets?
-2. ./scripts/package_wheels.sh : package each wheel to system package (deb in this example)
+1. ./scripts/build_wheels.sh : builds wheels for _requirement sets_ in `reqsets`?
+
+Using docker: `rm -rf dist buildroot; docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "yum install -y python-setuptools wget; wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py ; python2.7 /tmp/get-pip.py; scripts/build_wheels.sh"`
+
+2. ./scripts/package_wheels.sh : package each wheel to system package (rpm in this example)
+
+Using temporary docker container (TODO: create docker image for this purpose): 
+````
+docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
+	yum install -y unzip rpm-build python-setuptools wget gcc make centos-release-scl \
+	&& yum install -y  ruby200-ruby-devel \
+	&& wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py && python2.7 /tmp/get-pip.py \
+	&& scl enable ruby200 \"gem install fpm\" && \
+	scl enable ruby200 \"sh -c 'PATH=/opt/rh/ruby200/root/usr/local/bin/:$PATH scripts/package_wheels.sh'\" "
+````
+
+
 3. ./scripts/package_my_pkg.sh : package end-point-application
+
+Using docker (TODO: create docker image for this purpose): 
+````
+docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
+	yum install -y unzip rpm-build python-setuptools wget gcc make centos-release-scl \
+	&& yum install -y  ruby200-ruby-devel ruby-rubygems \
+	&& wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py && python2.7 /tmp/get-pip.py \
+	&& scl enable ruby200 \"gem install fpm\" && \
+	scl enable ruby200 \"sh -c 'PATH=/opt/rh/ruby200/root/usr/local/bin/:$PATH scripts/package_my_pkg.sh'\" "
+````
+
+4. Test:
+
+````
+docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
+	yum install -y dist/debs/reqsset3/{reqsset3-wheel-an_example_pypi_project-0.0.4-1.x86_64.rpm,reqsset3-wheel-numpy-1.11.1-1.x86_64.rpm,reqsset3-wheel-virtualenv-15.0.3-1.x86_64.rpm} \
+	dist/debs_app/reqsset3/reqsset3-an_example_pypi_project-0.0.4-1.x86_64.rpm \
+	&& /opt/reqsset3-an_example_pypi_project/venv/bin/python -c \"import numpy as np; print 'from numpy:', np.sqrt(4.5); import an_example_pypi_project; print an_example_pypi_project\" "
+````
