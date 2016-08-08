@@ -1,0 +1,2 @@
+find ./reqsets -name '*.txt' -exec sh -c 'bdir=$(basename {}|cut -d'.' -f1); pip wheel --no-cache-dir --wheel-dir dist/wheels/$bdir -r {} -w dist/wheels/$bdir' \;
+# FIXME: upload wheels to nexus / artifactory; separated by reqset
