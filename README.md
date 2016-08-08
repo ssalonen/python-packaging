@@ -50,8 +50,8 @@ docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
 4. Test:
 ````
 docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
-	yum install -y dist/debs/reqsset3/{reqsset3-wheel-an_example_pypi_project-0.0.4-1.x86_64.rpm,reqsset3-wheel-numpy-1.11.1-1.x86_64.rpm,reqsset3-wheel-virtualenv-15.0.3-1.x86_64.rpm} \
-	dist/debs_app/reqsset3/reqsset3-an_example_pypi_project-0.0.4-1.x86_64.rpm \
+	yum install -y dist/rpms/reqsset3/{reqsset3-wheel-an_example_pypi_project-0.0.4-1.x86_64.rpm,reqsset3-wheel-numpy-1.11.1-1.x86_64.rpm,reqsset3-wheel-virtualenv-15.0.3-1.x86_64.rpm} \
+	dist/rpms_endpoint/reqsset3/reqsset3-an_example_pypi_project-0.0.4-1.x86_64.rpm \
 	&& /opt/reqsset3-an_example_pypi_project/venv/bin/python -c \
 		\"import numpy as np; print 'from numpy:', np.sqrt(4.5); import an_example_pypi_project; print an_example_pypi_project\" "
 ````

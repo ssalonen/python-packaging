@@ -1,4 +1,4 @@
-# Generate wheel "resource debs"
+# Generate wheel "resource system packages"
 unpack_script=$(readlink -f templates/wheel_unpack.sh)
 pre_remove_script=$(readlink -f templates/wheel_before_remove.sh)
 curdir=$(pwd)
@@ -18,7 +18,7 @@ for p in $(find . -wholename './dist/wheels/*.whl'); do
 	pathtowheel=$p
 	
 	installdir=/tmp/wheelio/$reqsetname/unpacked/
-	outdir=$(dirname $p|sed 's@wheels@debs@')
+	outdir=$(dirname $p|sed 's@wheels@rpms@')
 	mkdir -p $outdir
 
 	buildroot=$curdir/buildroot/tmp-$fname/	

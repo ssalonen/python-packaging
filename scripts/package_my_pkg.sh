@@ -7,7 +7,7 @@ for p in $(find -name '*example*.whl'); do
 	pkgversion=$(echo $fname|cut -d'-' -f2)
 	pkgversion=$(echo $fname|cut -d'-' -f2)
 	wheelpkgname=$reqsetname-${pytag}-wheel-$(echo $fname|cut -d'-' -f1)
-	outdir=$(dirname $p|sed 's@wheels@debs_app@')
+	outdir=$(dirname $p|sed 's@wheels@rpms_endpoint@')
 
 
 	virtualenvdep="$reqsetname-wheel-virtualenv"
