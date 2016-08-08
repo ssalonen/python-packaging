@@ -36,7 +36,7 @@ for p in $(find . -wholename './dist/wheels/*.whl'); do
 
 	# Symlink with simpler name also
 	ln -s $(basename $pathtowheel) ./$pkgname.whl.dir
-	fpm -f -s dir -t deb -n $pkgname -v $pkgversion -p $outdir \
+	fpm -f -s dir -t rpm -n $pkgname -v $pkgversion -p $outdir \
 	    -d zip \
 	 	--template-scripts \
 	 	--after-install $unpack_script \

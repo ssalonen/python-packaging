@@ -3,7 +3,7 @@ for p in $(find -name '*example*.whl'); do
 	fname=$(basename $p)
 
 	reqsetname=$(dirname $p|rev|cut -d'/' -f1|rev )
-	pkgname=$reqsetname-${pytag}-$(echo $fname|cut -d'-' -f1)
+	pkgname=$reqsetname-$(echo $fname|cut -d'-' -f1)
 	pkgversion=$(echo $fname|cut -d'-' -f2)
 	pkgversion=$(echo $fname|cut -d'-' -f2)
 	wheelpkgname=$reqsetname-${pytag}-wheel-$(echo $fname|cut -d'-' -f1)
@@ -20,7 +20,7 @@ for p in $(find -name '*example*.whl'); do
 	# 1. determine python dependencies of the package. Once that is done, generate list of dependencies of all the packages required, and mark them as such with -d 
 	# 2. Also the after install script should could be implemented in terms of pip requirements list
 	# FIXME: correct python version
-	fpm -f -s dir -t deb -n $pkgname -v $pkgversion -d unzip -d python \
+	fpm -f -s dir -t rpm -n $pkgname -v $pkgversion -d unzip -d python \
 		-d $virtualenvdep \
 		-d $wheelpkgname \
 		-d $reqsetname-wheel-numpy \
