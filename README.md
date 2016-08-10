@@ -55,3 +55,19 @@ docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
 	&& /opt/reqsset3-an_example_pypi_project/venv/bin/python -c \
 		\"import numpy as np; print 'from numpy:', np.sqrt(4.5); import an_example_pypi_project; print an_example_pypi_project\" "
 ````
+
+## Known issues / TODO
+
+- wheels should probably keep the same folder name for delta-rpm to work. Unless delta-rpm is clever as git...
+- the packages should be probably prefix/named also by python version and "architecture" (e.g. py3, py2 and myCustomCentOS6). Architecture is important because quite many python packages in the "scientific stack" compile againt system libraries (GEOS, netCDF, c runtime, fortran runtime).
+
+## Caveats
+
+- number of wheels grow quite large if one has many "requirement sets" (or pinlists)
+
+
+## Comparison to other solutions
+
+- packaging python packages separately as they do in all major linux distributions: assumes that everything is installed to same python site-packages. Software collections could be created to migitate this issue but app (endpoint application) separation would not be still possible.
+- Software collection per endpoint application: ...
+- packaging ready virtualenv to system package (e.g. [dh-virtualenv](https://github.com/spotify/dh-virtualenv) or [fpm virtualenv](https://github.com/jordansissel/fpm/wiki)): no delta-gain between end point applications. Much simpler implementation though.
