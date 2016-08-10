@@ -2,8 +2,8 @@
 
 Experimentation of packaging python software with the following requirements
 
+- delta-rpm support in case of rpms (driving factor in the design)
 - support for native system level packaging
-- delta-rpm support in case of rpms
 - separated virtualenvs for each application
 - fast install
 - support for numpy etc. c level api dependencies
@@ -55,6 +55,10 @@ docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) centos:7 bash -c "\
 	&& /opt/reqsset3-an_example_pypi_project/venv/bin/python -c \
 		\"import numpy as np; print 'from numpy:', np.sqrt(4.5); import an_example_pypi_project; print an_example_pypi_project\" "
 ````
+
+## Other notes
+
+- the resulting wheels can be used in CI to speed up builds
 
 ## Known issues / TODO
 
